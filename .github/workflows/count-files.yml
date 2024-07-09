@@ -2,7 +2,7 @@ name: Count Files
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened]
 
 jobs:
   count-files:
@@ -20,11 +20,14 @@ jobs:
           echo "file_count=${FILE_COUNT}" >> $GITHUB_ENV
 
       - name: Comment on PR
-        uses: peter-evans/create-or-update-comment@v3
+        uses: actions/github-script@v6
         with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            **File Count in the Root Directory:**
-            ${{ env.file_count }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '${{ env.file_count }}'
+            })
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
