@@ -2,7 +2,7 @@ name: Count Files
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened, synchronize]
 
 jobs:
   count-files:
