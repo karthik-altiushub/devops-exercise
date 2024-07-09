@@ -17,7 +17,7 @@ jobs:
         run: |
           chmod +x ./scripts/count_files.sh
           FILE_COUNT=$(./scripts/count_files.sh .)
-          echo "file_count=${FILE_COUNT}" >> $GITHUB_ENV  
+          echo "file_count=${FILE_COUNT}" >> $GITHUB_ENV
 
       - name: Comment on PR
         uses: peter-evans/create-or-update-comment@v3
@@ -26,3 +26,5 @@ jobs:
           body: |
             **File Count in the Root Directory:**
             ${{ env.file_count }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
