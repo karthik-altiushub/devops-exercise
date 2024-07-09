@@ -15,4 +15,4 @@ fi
 FILE_COUNT=$(find "$DIRECTORY" -maxdepth 1 -type f | wc -l)
 
 # Output the result
-echo "Number of files in $DIRECTORY: $FILE_COUNT"
+echo "$FILE_COUNT"
