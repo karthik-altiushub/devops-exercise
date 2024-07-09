@@ -1,0 +1,28 @@
+name: Count Files
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  count-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run count_files.sh script
+        id: count_files
+        run: |
+          chmod +x ./scripts/count_files.sh
+          FILE_COUNT=$(./scripts/count_files.sh .)
+          echo "file_count=${FILE_COUNT}" >> $GITHUB_ENV  
+
+      - name: Comment on PR
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            **File Count in the Root Directory:**
+            ${{ env.file_count }}
