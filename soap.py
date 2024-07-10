@@ -6,6 +6,7 @@ from requests import Session
 
 logger = logging.getLogger('default')
 
+
 class SOAPClient:
     def __init__(self, wsdl: str, service: Optional[str] = None, port: Optional[str] = None) -> None:
         self.wsdl: str = wsdl
