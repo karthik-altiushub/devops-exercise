@@ -1,6 +1,7 @@
 ### Changelog
 
 #### Other Changes:
+- change log - Feature
 - test 8
 - test 7
 - test 6
