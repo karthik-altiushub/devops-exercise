@@ -20,7 +20,7 @@ jobs:
 
     - name: Increment version
       run: |
-        chmod +x increment_version.sh
+        chmod +x ./scripts/increment_version.sh
         ./scripts/increment_version.sh
 
     - name: Commit and push changes
