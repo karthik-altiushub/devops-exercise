@@ -28,11 +28,22 @@ jobs:
           chmod +x ./scripts/generate_changelog.sh
           ./scripts/generate_changelog.sh
 
-      - name: Commit and push changelog
-        run: |
-          git add CHANGELOG.md
-          git commit -m "Update changelog [skip ci]"
-          git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.event.pull_request.head.ref }}
-        # if: github.ref == 'refs/heads/main' # Only push changes on the main branch
+      - name: Create a new commit using GitHub API
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          COMMIT_MESSAGE="Update changelog [skip ci]"
+          BRANCH_NAME=${{ github.event.pull_request.head.ref }}
+          FILE_PATH="CHANGELOG.md"
+          CONTENT=$(base64 -w 0 CHANGELOG.md)
+          SHA=$(curl -s \
+            -H "Authorization: token ${GH_TOKEN}" \
+            https://api.github.com/repos/${{ steps.repo_details.outputs.owner }}/${{ steps.repo_details.outputs.repo }}/contents/${FILE_PATH} | jq -r '.sha')
+
+          DATA=$(jq -n --arg path "$FILE_PATH" --arg message "$COMMIT_MESSAGE" --arg content "$CONTENT" --arg sha "$SHA" \
+          '{path: $path, message: $message, content: $content, sha: $sha}')
+
+          curl -X PUT -s \
+            -H "Authorization: token ${GH_TOKEN}" \
+            -d "$DATA" \
+            https://api.github.com/repos/${{ steps.repo_details.outputs.owner }}/${{ steps.repo_details.outputs.repo }}/contents/${FILE_PATH}
