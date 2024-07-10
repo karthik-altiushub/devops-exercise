@@ -17,33 +17,13 @@ jobs:
         with:
           fetch-depth: 0 # Ensure full history is fetched
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-
-      - name: Run generate_changelog.sh script
-        id: generate_changelog
+      - name: Generate and Push Changelog
         run: |
           chmod +x ./scripts/generate_changelog.sh
           ./scripts/generate_changelog.sh
-
-      - name: Create a new commit using GitHub API
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          COMMIT_MESSAGE="Update changelog [skip ci]"
-          BRANCH_NAME=${{ github.event.pull_request.head.ref }}
-          FILE_PATH="CHANGELOG.md"
-          CONTENT=$(base64 -w 0 CHANGELOG.md)
-          SHA=$(curl -s \
-            -H "Authorization: token ${GH_TOKEN}" \
-            https://api.github.com/repos/${{ steps.repo_details.outputs.owner }}/${{ steps.repo_details.outputs.repo }}/contents/${FILE_PATH} | jq -r '.sha')
-
-          DATA=$(jq -n --arg path "$FILE_PATH" --arg message "$COMMIT_MESSAGE" --arg content "$CONTENT" --arg sha "$SHA" \
-          '{path: $path, message: $message, content: $content, sha: $sha}')
-
-          curl -X PUT -s \
-            -H "Authorization: token ${GH_TOKEN}" \
-            -d "$DATA" \
-            https://api.github.com/repos/${{ steps.repo_details.outputs.owner }}/${{ steps.repo_details.outputs.repo }}/contents/${FILE_PATH}
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout "${GITHUB_REF:11}"
+          git commit -am "Auto-update changelog"
+          git push
