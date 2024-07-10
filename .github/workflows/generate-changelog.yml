@@ -23,6 +23,7 @@ jobs:
           ./scripts/generate_changelog.sh
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b ${{ github.repository }}
           git add .
           git commit -m "Auto generated Changelog"
           git push
