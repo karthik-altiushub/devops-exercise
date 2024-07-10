@@ -2,7 +2,7 @@ name: Count Files
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, reopened, synchronize]
 
 jobs:
   count-files:
@@ -17,12 +17,15 @@ jobs:
         run: |
           chmod +x ./scripts/count_files.sh
           FILE_COUNT=$(./scripts/count_files.sh .)
-          echo "file_count=${FILE_COUNT}" >> $GITHUB_ENV  
+          echo "file_count=${FILE_COUNT}" >> $GITHUB_ENV
 
       - name: Comment on PR
-        uses: peter-evans/create-or-update-comment@v3
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            **File Count in the Root Directory:**
-            ${{ env.file_count }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          COMMENT="No of Files in the Root Directory: ${{ env.file_count }}"
+          GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
+          COMMENT_URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+
+          curl -s -H "Authorization: token ${GITHUB_TOKEN}" -X POST $COMMENT_URL -d "{\"body\":\"$COMMENT\"}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

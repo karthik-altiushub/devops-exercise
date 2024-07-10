@@ -1,0 +1,40 @@
+name: Generate Changelog
+
+on:
+  push:
+    tags:
+      - '*'
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  generate-changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Ensure full history is fetched
+
+      - name: Generate and Push Changelog
+        run: |
+          
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout "${GITHUB_REF:11}"
+          git commit -am "Auto-update changelog"
+          git push
+
+
+
+      - name: Run generate_changelog.sh script
+        id: generate_changelog
+        run: |
+          chmod +x ./scripts/generate_changelog.sh
+          ./scripts/generate_changelog.sh
+
+      - name: Create a new commit using GitHub API
+        run: |
+          GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
