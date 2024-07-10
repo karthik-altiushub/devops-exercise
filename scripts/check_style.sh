@@ -6,7 +6,7 @@ flake8 .
 
 # Check TypeScript files using eslint
 echo "Checking TypeScript files with eslint..."
-eslint .
+npx eslint .
 
 
 # Capture exit status of flake8 and eslint
