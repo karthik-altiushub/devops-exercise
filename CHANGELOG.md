@@ -4,6 +4,9 @@
 - change log - [Feature]
 - change log - Feature
 
+#### Bug Fixes:
+- testing bug commit
+
 #### Other Changes:
 - test 8
 - test 7
