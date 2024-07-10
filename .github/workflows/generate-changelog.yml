@@ -28,6 +28,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add CHANGELOG.md
         git commit -m "Update CHANGELOG.md"
+        git pull
         git push
     env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
