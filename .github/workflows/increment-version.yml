@@ -6,7 +6,6 @@ on:
       - main
       - dev
 
-
 jobs:
   increment-version:
     runs-on: ubuntu-latest
