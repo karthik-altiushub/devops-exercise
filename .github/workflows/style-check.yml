@@ -32,5 +32,5 @@ jobs:
 
       - name: Run style check
         run: |
-            chmod +x ./scripts/count_files.sh
+            chmod +x ./scripts/check_style.sh
             ./scripts/check_style.sh
