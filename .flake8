@@ -1,3 +1,3 @@
 [flake8]
-exclude = .venv, .git, __pycache__, build, dist, venv
+exclude = .venv, .git, __pycache__, build, dist, venv, node_modules
 max-line-length = 120
