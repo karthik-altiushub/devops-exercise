@@ -11,23 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Ensure full history is fetched
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0 # Ensure full history is fetched
 
-      - name: Generate Changelog
-        id: generate_changelog
-        run: |
-          chmod +x ./scripts/generate_changelog.sh
-          ./scripts/generate_changelog.sh
+    - name: Generate Changelog
+      id: generate_changelog
+      run: |
+        chmod +x ./scripts/generate_changelog.sh
+        ./scripts/generate_changelog.sh
 
-      - name: Commit and push changes
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add CHANGELOG.md
-          git commit -m "Update CHANGELOG.md"
-          git push
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add CHANGELOG.md
+        git commit -m "Update CHANGELOG.md"
+        git push
+    env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
