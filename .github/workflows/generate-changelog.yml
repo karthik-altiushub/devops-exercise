@@ -33,4 +33,4 @@ jobs:
           git add CHANGELOG.md
           git commit -m "Update changelog [skip ci]"
           git push
-        if: github.ref == 'refs/heads/main' # Only push changes on the main branch
+        # if: github.ref == 'refs/heads/main' # Only push changes on the main branch
