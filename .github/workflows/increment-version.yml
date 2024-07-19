@@ -26,7 +26,7 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add version.txt
-        git commit -m "Increment version"
+        git commit -m "Increment version [skip ci]"
         git push
     env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
