@@ -9,6 +9,11 @@
 
 #### Other Changes:
 - versioning check
+- Increment version [skip ci]
+- Merge branch 'dev' of https://github.com/karthik-altiushub/devops-exercise into dev
+- versioning check
+- Update CHANGELOG.md
+- versioning check
 - Update CHANGELOG.md
 - Merge branch 'dev' of https://github.com/karthik-altiushub/devops-exercise into dev
 - change log
