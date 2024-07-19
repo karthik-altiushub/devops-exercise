@@ -30,5 +30,3 @@ jobs:
         git add version.txt
         git commit -m "Increment version [skip ci]"
         git push
-    env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
