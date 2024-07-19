@@ -8,6 +8,8 @@
 - testing bug commit
 
 #### Other Changes:
+- versioning check
+- Update CHANGELOG.md
 - Merge branch 'dev' of https://github.com/karthik-altiushub/devops-exercise into dev
 - change log
 - Increment version
