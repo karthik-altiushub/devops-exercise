@@ -58,7 +58,7 @@ class Command(BaseCommand):
                                     f"{plan_node[0]}.{plan_node[1]}: {operation.__class__.__name__}"
                                 )
                                 self.stdout.write(self.style.ERROR(error_message))
-                                sys.exit(0)
+                                sys.exit(1)
 
         self.stdout.write(self.style.SUCCESS("No table locking schema changes found."))
 
