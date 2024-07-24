@@ -10,6 +10,12 @@
 #### Other Changes:
 - testing exit code
 - Increment version [skip ci]
+- Merge branch 'dev' of https://github.com/karthik-altiushub/devops-exercise into dev
+- testing exit code
+- Increment version [skip ci]
+- Update CHANGELOG.md
+- testing exit code
+- Increment version [skip ci]
 - versioning check 2
 - Increment version [skip ci]
 - Update CHANGELOG.md
